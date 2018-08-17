@@ -1,4 +1,6 @@
 ---
   - name: Bootstrap a host without python installed
     raw: apt-get install -y python gnupg2
+    when:
+      inventory_hostname != 'localhost'
     ignore_errors: yes

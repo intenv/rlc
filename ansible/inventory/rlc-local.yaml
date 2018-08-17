@@ -7,6 +7,12 @@ all:
     ansible_become_method: sudo
     ansible_become_pass: xsw!2345
   children:
+    lxc_host:
+      hosts:
+        localhost:
+          ansible_connection: local
+          ansible_become: true
+          ansible_become_method: sudo
     confluent:
       hosts:
         debian9:
