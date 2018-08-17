@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  gather_facts: False
+  roles:
+    - known_hosts
+  tags:
+    - always
+
+- hosts: all
+  gather_facts: False
+  roles:
+    - raw_python
+  tags:
+    - raw_python
+
+- hosts: confluent
+  roles:
+    - confluent
+  tags:
+    - confluent

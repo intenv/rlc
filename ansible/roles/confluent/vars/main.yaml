@@ -1,0 +1,8 @@
+---
+packages:
+  - openjdk-8-jre-headless
+  - curl
+  - confluent-platform-oss-2.11
+
+apt_support_package:
+  - apt-transport-https

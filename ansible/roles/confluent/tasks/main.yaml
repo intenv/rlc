@@ -1,0 +1,48 @@
+---
+  - name: Усстановка пакетов для работы Apt
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      state: present
+    with_items: "{{ apt_support_package }}"
+    tags:
+      - install
+
+  - name: Добавить ключи для репозиториев
+    apt_key:
+      url: "{{item}}"
+      state: present
+      validate_certs: no
+    tags:
+      - install
+    with_items: "{{ apt_repositories_keys }}"
+
+  - name: Добавить репозитории
+    apt_repository:
+      repo: "{{ item }}"
+      state: present
+    with_items: "{{ apt_repositories }}"
+    tags:
+      - install
+
+  - name: Обновить метаданные репозитория
+    apt:
+      update_cache: yes
+    tags:
+      - install
+
+  - name: Установить пакеты
+    apt:
+      name: "{{ item }}"
+      state: present
+      allow_unauthenticated: yes
+    with_items: "{{ packages }}"
+    tags:
+      - install
+
+  # - name: Настройка Платформы confluent
+  #   block:
+  #     - name: Настройка ZooKeeper
+  #       template:
+  #         src: zookeeper.properties.j2
+  #         dst: /etc/kafka/zookeeper.properties

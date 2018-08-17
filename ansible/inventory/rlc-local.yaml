@@ -1,0 +1,16 @@
+---
+all:
+  vars:
+    ansible_user: sysadm
+    ansible_ssh_pass: xsw!2345
+    ansible_become: true
+    ansible_become_method: sudo
+    ansible_become_pass: xsw!2345
+  children:
+    confluent:
+      hosts:
+        debian9:
+          apt_repositories_keys:
+            - https://packages.confluent.io/deb/5.0/archive.key
+          apt_repositories:
+            - deb [arch=amd64] https://packages.confluent.io/deb/5.0 stable main

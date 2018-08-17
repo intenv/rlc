@@ -1,0 +1,4 @@
+---
+  - name: Bootstrap a host without python installed
+    raw: apt-get install -y python gnupg2
+    ignore_errors: yes
