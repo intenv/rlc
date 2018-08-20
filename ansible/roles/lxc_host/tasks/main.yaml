@@ -1,0 +1,21 @@
+---
+  - name: Установить паакеты для lxc
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ lxc_packages }}"
+
+  - name: Настроить сеть (для уменьшения диапазона dhcp)
+    lineinfile:
+      path: /etc/default/lxc-net
+      regexp: '^\s*LXC_DHCP_RANGE'
+      line: 'LXC_DHCP_RANGE="{{ LXC_DHCP_RANGE }}"'
+    notify:
+      "restart lxc-net"
+
+# LXC_BRIDGE="lxcbr0"
+# LXC_ADDR="10.0.3.1"
+# LXC_NETMASK="255.255.255.0"
+# LXC_NETWORK="10.0.3.0/24"
+# LXC_DHCP_RANGE="10.0.3.128,10.0.3.254"
+# LXC_DHCP_MAX="253"
