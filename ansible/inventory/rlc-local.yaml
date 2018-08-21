@@ -13,6 +13,17 @@ all:
           ansible_connection: local
           ansible_become: true
           ansible_become_method: sudo
+    lxc_container:
+      hosts:
+        localhost:
+          ansible_connection: local
+          ansible_become: true
+          ansible_become_method: sudo
+          containers:
+            - name: kafka01
+              ip: 10.0.3.11
+              user: sysadm
+              passwd: zaq!2345
     confluent:
       hosts:
         debian9:

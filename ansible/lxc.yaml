@@ -1,0 +1,12 @@
+---
+  - hosts: lxc_host
+    roles:
+      - lxc_host
+    tags:
+      - lxc_host
+
+  - hosts: lxc_container
+    roles:
+      - lxc_container
+    tags:
+      - lxc_container

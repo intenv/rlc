@@ -14,12 +14,6 @@
   tags:
     - raw_python
 
-- hosts: lxc_host
-  roles:
-    - lxc_host
-  tags:
-    - lxc_host
-
 - hosts: confluent
   roles:
     - confluent

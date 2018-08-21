@@ -7,7 +7,6 @@
       state: present
     when:
       inventory_hostname != 'localhost'
-    # become: no
     tags:
       - always
 
