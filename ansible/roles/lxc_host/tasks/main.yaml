@@ -5,17 +5,18 @@
       state: present
     with_items: "{{ lxc_packages }}"
 
-  - name: Настроить сеть (для уменьшения диапазона dhcp)
+  - name: Раскоментировать настройку lxc dnsmasq.conf
     lineinfile:
       path: /etc/default/lxc-net
-      regexp: '^\s*LXC_DHCP_RANGE'
-      line: 'LXC_DHCP_RANGE="{{ LXC_DHCP_RANGE }}"'
+      regexp: '^[#\s]*LXC_DHCP_CONFILE'
+      line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
     notify:
-      "restart lxc-net"
+      - "restart lxc-net"
 
-# LXC_BRIDGE="lxcbr0"
-# LXC_ADDR="10.0.3.1"
-# LXC_NETMASK="255.255.255.0"
-# LXC_NETWORK="10.0.3.0/24"
-# LXC_DHCP_RANGE="10.0.3.128,10.0.3.254"
-# LXC_DHCP_MAX="253"
+  - name: Создать файл /etc/lxc/dnsmasq.conf
+    file:
+      path: /etc/lxc/dnsmasq.conf
+      state: touch
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"

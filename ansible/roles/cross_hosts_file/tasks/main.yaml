@@ -1,0 +1,12 @@
+---
+  # - name: сформировать Host file
+  #   debug:
+  #     msg: "{{ hostvars[item] }}"
+  #   with_items: "{{  groups['cross_hosts_file'] }}"
+
+  - name: сформировать Host file
+    lineinfile:
+      path: /etc/hosts
+      regexp: '\s+{{ item }}\s*'
+      line: "{{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}  {{ item }}"
+    with_items: "{{  groups['cross_hosts_file'] }}"

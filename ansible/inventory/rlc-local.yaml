@@ -2,10 +2,10 @@
 all:
   vars:
     ansible_user: sysadm
-    ansible_ssh_pass: xsw!2345
+    ansible_ssh_pass: zaq!2345
     ansible_become: true
     ansible_become_method: sudo
-    ansible_become_pass: xsw!2345
+    ansible_become_pass: zaq!2345
   children:
     lxc_host:
       hosts:
@@ -24,10 +24,26 @@ all:
               ip: 10.0.3.11
               user: sysadm
               passwd: zaq!2345
+            - name: kafka02
+              ip: 10.0.3.12
+              user: sysadm
+              passwd: zaq!2345
+            - name: kafka03
+              ip: 10.0.3.13
+              user: sysadm
+              passwd: zaq!2345
+    cross_hosts_file:
+      hosts:
+        kafka01:
+        kafka02:
+        kafka03:
     confluent:
       hosts:
-        debian9:
-          apt_repositories_keys:
-            - https://packages.confluent.io/deb/5.0/archive.key
-          apt_repositories:
-            - deb [arch=amd64] https://packages.confluent.io/deb/5.0 stable main
+        kafka01:
+        kafka02:
+        kafka03:
+      vars:
+        apt_repositories_keys:
+          - https://packages.confluent.io/deb/5.0/archive.key
+        apt_repositories:
+          - deb [arch=amd64] https://packages.confluent.io/deb/5.0 stable main

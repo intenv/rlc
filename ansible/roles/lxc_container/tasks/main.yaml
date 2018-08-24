@@ -9,7 +9,6 @@
   - name: Создать контейнер
     lxc_container:
       name: "{{ item.name }}"
-      container_log: true
       template: debian
       state: started
       backing_store: dir
@@ -20,6 +19,7 @@
         adduser --gecos "{{ item.user }},None,None,None" --disabled-password {{ item.user }}
         echo {{ item.user }}:{{ item.passwd }} | chpasswd
         usermod -a -G sudo {{ item.user }}
+        touch /var/lib/sudo/lectured/sysadm
         echo 'hello world.' | tee /opt/started
         if [[ -f "/opt/started" ]]; then
             echo 'hello world.' | tee /opt/found-started
@@ -27,6 +27,15 @@
       container_config:
         - "lxc.net.0.ipv4.address = {{ item.ip }}/24"
       container_log_level: DEBUG
-      # container_log: yes
+      container_log: yes
     register: lxc_container_info
     with_items: "{{ containers }}"
+
+  - name: '"Заморозить" IP контейнера'
+    lineinfile:
+      path: /etc/lxc/dnsmasq.conf
+      regexp: '.*dhcp-host={{ item.name }}.*'
+      line: 'dhcp-host={{ item.name }},{{ item.ip }}'
+    with_items: "{{ containers }}"
+    notify:
+      - "restart lxc-net"
