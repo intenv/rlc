@@ -3,5 +3,5 @@
     - lxc
     - python-lxc
     - lxcfs
-    - lxc-templates
+    # - lxc-templates
     # - lxc-utils
