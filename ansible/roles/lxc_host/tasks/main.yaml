@@ -5,15 +5,52 @@
       state: present
     with_items: "{{ lxc_packages }}"
 
-  - name: Раскоментировать настройку lxc dnsmasq.conf
+  - name: Настроить сеть на хосте
     lineinfile:
       path: /etc/default/lxc-net
       create: yes
-      regexp: '^[#\s]*LXC_DHCP_CONFILE'
-      line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
+      regexp: '^[#\s]*{{ item.key }}'
+      line: '{{ item.key }}={{ item.value }}'
+    with_items:
+      - key: LXC_DHCP_CONFILE
+        value: /etc/lxc/dnsmasq.conf
+      - key: LXC_BRIDGE
+        value: '"lxcbr0"'
+      - key: LXC_ADDR
+        value: '"10.0.3.1"'
+      - key: LXC_NETMASK
+        value: '"255.255.255.0"'
+      - key: LXC_NETWORK
+        value: '"10.0.3.0/24"'
+      - key: LXC_DHCP_RANGE
+        value: '"10.0.3.2,10.0.3.254"'
+      - key: LXC_DHCP_MAX
+        value: '"253"'
     notify:
       - "restart lxc"
       - "restart lxc-net"
+
+  # - name: Раскоментировать настройку lxc dnsmasq.conf
+  #   lineinfile:
+  #     path: /etc/default/lxc-net
+  #     create: yes
+  #     regexp: '^[#\s]*LXC_DHCP_CONFILE'
+  #     line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
+  #   notify:
+  #     - "restart lxc"
+  #     - "restart lxc-net"
+
+
+  # - name: Раскоментировать настройку lxc dnsmasq.conf
+  #   lineinfile:
+  #     path: /etc/default/lxc-net
+  #     create: yes
+  #     regexp: '^[#\s]*LXC_DHCP_CONFILE'
+  #     line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
+  #   notify:
+  #     - "restart lxc"
+  #     - "restart lxc-net"
+
 
   - name: Настроить сеть для контейнеров
     template:
