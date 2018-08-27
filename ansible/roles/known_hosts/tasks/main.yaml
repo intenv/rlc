@@ -14,6 +14,7 @@
     local_action: shell ssh-keygen -R $(getent hosts {{ inventory_hostname }} | awk '{ print $1 }')
     when:
       inventory_hostname != 'localhost'
+    ignore_errors: yes 
     tags:
       - known_hosts
 
