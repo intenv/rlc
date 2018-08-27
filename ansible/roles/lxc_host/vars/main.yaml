@@ -2,6 +2,6 @@
   lxc_packages:
     - lxc
     - python-lxc
-    - lxc-utils
     - lxcfs
     - lxc-templates
+    # - lxc-utils
