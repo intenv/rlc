@@ -15,6 +15,16 @@
       - "restart lxc"
       - "restart lxc-net"
 
+  - name: Настроить сеть для контейнеров
+    template:
+      src: default.conf.j2
+      dest: /etc/lxc/default.conf
+      owner: root
+      group: root
+      mode: "u=rw,g=r,o=r"
+    notify:
+      - "restart lxc-net"
+
   - name: Создать файл /etc/lxc/dnsmasq.conf
     file:
       path: /etc/lxc/dnsmasq.conf
