@@ -40,9 +40,17 @@
     tags:
       - install
 
-  # - name: Настройка Платформы confluent
-  #   block:
-  #     - name: Настройка ZooKeeper
-  #       template:
-  #         src: zookeeper.properties.j2
-  #         dst: /etc/kafka/zookeeper.properties
+  - name: Настройка Платформы confluent
+    block:
+      - name: Настройка ZooKeeper
+        template:
+          src: zookeeper.properties.j2
+          dest: /etc/kafka/zookeeper.properties
+
+      - name: Добавить MyID
+        lineinfile:
+          path: /var/lib/zookeeper/myid
+          state: present
+          regexp: "^.*$"
+          create: yes
+          line: "{{ ZK_serverid }}"

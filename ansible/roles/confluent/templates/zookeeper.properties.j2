@@ -3,8 +3,8 @@ dataDir=/var/lib/zookeeper/
 clientPort=2181
 initLimit=5
 syncLimit=2
-{% fot host in hosts %}
-server.1=host:2888:3888
+{% for host in groups['confluent'] %}
+server.{{ hostvars[host].ZK_serverid }}={{ host }}:{{ ZK_leaderport }}:{{ ZK_electionport }}
 {% endfor %}
 autopurge.snapRetainCount=3
 autopurge.purgeInterval=24
