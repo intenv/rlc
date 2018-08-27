@@ -12,6 +12,8 @@
       regexp: '^[#\s]*{{ item.key }}'
       line: '{{ item.key }}={{ item.value }}'
     with_items:
+      - key: USE_LXC_BRIDGE
+        value: "true"
       - key: LXC_DHCP_CONFILE
         value: /etc/lxc/dnsmasq.conf
       - key: LXC_BRIDGE
