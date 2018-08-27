@@ -12,7 +12,7 @@
       template: debian
       state: started
       backing_store: dir
-      template_options: --release stretch
+      template_options: --release stretch --arch amd64
       container_command: |
         apt-get update
         apt-get install -y sudo ssh
