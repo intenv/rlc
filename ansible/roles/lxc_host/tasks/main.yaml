@@ -23,6 +23,6 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
-  # - name: Установка lxc-python2 через pip
-  #   pip:
-  #     name: lxc-python2
+  - name: Установка lxc-python2 через pip
+    pip:
+      name: lxc-python2
