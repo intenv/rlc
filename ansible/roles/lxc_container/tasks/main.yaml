@@ -24,8 +24,8 @@
         if [[ -f "/opt/started" ]]; then
             echo 'hello world.' | tee /opt/found-started
         fi
-      # container_config:
-      #   - "lxc.net.0.ipv4.address = {{ item.ip }}/24"
+      container_config:
+        - "lxc.net.0.ipv4.address = {{ item.ip }}/24"
       container_log_level: DEBUG
       container_log: yes
     register: lxc_container_info
