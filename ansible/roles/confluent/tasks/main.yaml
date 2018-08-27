@@ -40,17 +40,30 @@
     tags:
       - install
 
-  - name: Настройка Платформы confluent
+  - name: Настройка ZooKeeper
     block:
-      - name: Настройка ZooKeeper
+      - name: Заполнить список нод в кластере
         template:
           src: zookeeper.properties.j2
           dest: /etc/kafka/zookeeper.properties
 
-      - name: Добавить MyID
+      - name: Добавить MyID ZooKeeper
         lineinfile:
           path: /var/lib/zookeeper/myid
           state: present
           regexp: "^.*$"
           create: yes
           line: "{{ ZK_serverid }}"
+
+  - name: Включить автозагрузку служб
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - confluent-zookeeper
+      - confluent-kafka
+      - confluent-schema-registry
+      - confluent-kafka-rest
+      - confluent-connect
+      - confluent-ksql-server

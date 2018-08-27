@@ -1,5 +1,5 @@
 ---
-  - name:  Очистить kntnown_hosts на локальной машине
+  - name:  Очистить kntnown_hosts на локальной машине (Name)
     local_action:
       module: known_hosts
       name: "{{ inventory_hostname }}"
@@ -9,6 +9,13 @@
       inventory_hostname != 'localhost'
     tags:
       - always
+
+  - name:  Очистить kntnown_hosts на локальной машине (IP)
+    local_action: shell ssh-keygen -R $(getent hosts {{ inventory_hostname }} | awk '{ print $1 }')
+    when:
+      inventory_hostname != 'localhost'
+    tags:
+      - known_hosts
 
   - name: Заполнить known_hosts на локальной машине
     local_action:
@@ -20,17 +27,3 @@
       inventory_hostname != 'localhost'
     tags:
       - always
-
-  - name: Set authorized key taken from file
-    authorized_key:
-      user: "{{ item }}"
-      state: present
-      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-    when:
-      inventory_hostname != 'localhost'
-    with_items:
-      - sysadm
-
-#  - name: Bootstrap a host without python installed
-#    raw: apt-get install -y python
-#    ignore_errors: yes

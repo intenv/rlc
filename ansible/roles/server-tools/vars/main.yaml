@@ -1,0 +1,9 @@
+packages:
+  - aptitude
+  - sudo
+  - net-tools
+  - vim
+  - mc
+  - curl
+  - less
+  # - htop

@@ -14,6 +14,18 @@
   tags:
     - raw_python
 
+- hosts: local_sshkey
+  roles:
+    - local_sshkey
+  tags:
+    - local_sshkey
+
+- hosts: server-tools
+  roles:
+    - server-tools
+  tags:
+    - server-tools
+
 - hosts: cross_hosts_file
   roles:
     - cross_hosts_file

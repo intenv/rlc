@@ -1,0 +1,15 @@
+---
+# Роль для инструментов и утилит
+  - name: Обновить метаданные репозитория deb
+    apt:
+      update_cache: yes
+    tags:
+      - install
+
+  - name: Установить инструменты и утилиты
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ packages }}"
+    tags:
+      - install
