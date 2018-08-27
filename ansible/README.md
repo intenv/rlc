@@ -9,6 +9,7 @@ sudo pip install ansible
 ```
 ssh-keygen
 ```
+Также надо иметь возможность sudo либо в inventory прописать ansible_become_pass либо запускать playbook lxc.yml через sudo
 
 ## Пример запуска
 

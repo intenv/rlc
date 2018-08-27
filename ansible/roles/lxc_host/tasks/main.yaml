@@ -8,9 +8,11 @@
   - name: Раскоментировать настройку lxc dnsmasq.conf
     lineinfile:
       path: /etc/default/lxc-net
+      create: yes
       regexp: '^[#\s]*LXC_DHCP_CONFILE'
       line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
     notify:
+      - "restart lxc"
       - "restart lxc-net"
 
   - name: Создать файл /etc/lxc/dnsmasq.conf
