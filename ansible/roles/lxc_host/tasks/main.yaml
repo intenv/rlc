@@ -32,28 +32,6 @@
       - "restart lxc"
       - "restart lxc-net"
 
-  # - name: Раскоментировать настройку lxc dnsmasq.conf
-  #   lineinfile:
-  #     path: /etc/default/lxc-net
-  #     create: yes
-  #     regexp: '^[#\s]*LXC_DHCP_CONFILE'
-  #     line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
-  #   notify:
-  #     - "restart lxc"
-  #     - "restart lxc-net"
-
-
-  # - name: Раскоментировать настройку lxc dnsmasq.conf
-  #   lineinfile:
-  #     path: /etc/default/lxc-net
-  #     create: yes
-  #     regexp: '^[#\s]*LXC_DHCP_CONFILE'
-  #     line: 'LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf'
-  #   notify:
-  #     - "restart lxc"
-  #     - "restart lxc-net"
-
-
   - name: Настроить сеть для контейнеров
     template:
       src: default.conf.j2
@@ -72,6 +50,6 @@
       group: root
       mode: "u=rw,g=r,o=r"
 
-  - name: Установка lxc-python2 через pip
-    pip:
-      name: lxc-python2
+  # - name: Установка lxc-python2 через pip
+  #   pip:
+  #     name: lxc-python2
