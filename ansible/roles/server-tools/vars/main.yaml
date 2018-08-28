@@ -6,4 +6,6 @@ packages:
   - mc
   - curl
   - less
+  - nano
+  - man
   # - htop

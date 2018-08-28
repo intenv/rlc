@@ -1,4 +1,8 @@
 ---
+  # - debug: msg='{{ groups["confluent"] | extend_join(",", "http://", ":2181")}}'
+  #   tags:
+  #     - mydebug
+
   - name: Усстановка пакетов для работы Apt
     apt:
       name: "{{ item }}"
@@ -55,6 +59,31 @@
           create: yes
           line: "{{ ZK_serverid }}"
 
+  - name: Настройка Kafka
+    block:
+      - name: Установить id брокера
+        lineinfile:
+          path: /etc/kafka/server.properties
+          create: yes
+          regexp: '^#*{{ item.key }}'
+          line: '{{ item.key }}={{ item.value }}'
+        with_items:
+          - key: broker.id
+            value: '{{ brocker_id }}'
+          - key: listeners
+            value: "PLAINTEXT://{{ inventory_hostname }}:9092"
+        notify:
+          - "restart kafka"
+
+      - name: Прописать все доступные инстансы zookeeper
+        lineinfile:
+          path: /etc/kafka/server.properties
+          regexp: '^#*zookeeper.connect='
+          line: 'zookeeper.connect={{ groups["confluent"] | extend_join(",","", ":2181")}}'
+        notify:
+          - "restart kafka"
+
+
   - name: Включить автозагрузку служб
     service:
       name: "{{ item }}"
@@ -65,5 +94,5 @@
       - confluent-kafka
       - confluent-schema-registry
       - confluent-kafka-rest
-      - confluent-connect
-      - confluent-ksql-server
+      # - confluent-connect
+      # - confluent-ksql-server

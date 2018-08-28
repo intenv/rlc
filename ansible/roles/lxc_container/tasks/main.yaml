@@ -26,6 +26,7 @@
         fi
       container_config:
         - "lxc.net.0.ipv4.address = {{ item.ip }}/24"
+        - "lxc.cgroup.memory.limit_in_bytes = {{ item.mem }}"
       container_log_level: DEBUG
       container_log: yes
     register: lxc_container_info

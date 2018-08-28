@@ -24,14 +24,17 @@ all:
               ip: 10.0.3.11
               user: sysadm
               passwd: zaq!2345
+              mem: 1500M
             - name: kafka02
               ip: 10.0.3.12
               user: sysadm
               passwd: zaq!2345
+              mem: 15000M
             - name: kafka03
               ip: 10.0.3.13
               user: sysadm
               passwd: zaq!2345
+              mem: 15000M
     local_sshkey:
       hosts:
         kafka01:
@@ -51,10 +54,13 @@ all:
       hosts:
         kafka01:
           ZK_serverid: 1
+          brocker_id: 1
         kafka02:
           ZK_serverid: 2
+          brocker_id: 2
         kafka03:
           ZK_serverid: 3
+          brocker_id: 3
       vars:
         apt_repositories_keys:
           - https://packages.confluent.io/deb/5.0/archive.key
