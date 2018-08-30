@@ -72,6 +72,10 @@
             value: '{{ brocker_id }}'
           - key: listeners
             value: "PLAINTEXT://{{ inventory_hostname }}:9092"
+          - key: leader.imbalance.per.broker.percentage
+            value: "{{ imbalance_percentage }}"
+          - key: leader.imbalance.check.interval.seconds
+            value: "{{ imbalance_seconds }}"
         notify:
           - "restart kafka"
 

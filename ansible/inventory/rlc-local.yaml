@@ -55,12 +55,18 @@ all:
         kafka01:
           ZK_serverid: 1
           brocker_id: 1
+          imbalance_percentage: 5
+          imbalance_seconds: 60
         kafka02:
           ZK_serverid: 2
           brocker_id: 2
+          imbalance_percentage: 5
+          imbalance_seconds: 60
         kafka03:
           ZK_serverid: 3
           brocker_id: 3
+          imbalance_percentage: 5
+          imbalance_seconds: 60
       vars:
         apt_repositories_keys:
           - https://packages.confluent.io/deb/5.0/archive.key
